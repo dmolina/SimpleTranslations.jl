@@ -1,6 +1,7 @@
 module SimpleTranslations
 
 using Parameters
+using Formatting
 
 @with_kw mutable struct SimpleTranslation
     _msgs::Dict{String,Dict{String,String}}=Dict()
@@ -47,6 +48,18 @@ function parse_option(line)
     return key, values
 end
 
+function check_sets(set1, set2, template1, template2)
+    diff = setdiff(set1, set2)
+    if !isempty(diff)
+        error("error: " *format(template1, first(diff)))
+    end
+
+    diff = setdiff(set2, set1)
+    if !isempty(diff)
+        error("error: " *format(template2, first(diff)))
+    end
+end
+
 """
 is_valid(translation)
 
@@ -57,16 +70,22 @@ If any error is detected, an exception is throw
 function check_valid(translation::SimpleTranslation)
     langs = Set(keys(translation._msgs))
 
-    if translation._languages != langs
-        diff = setdiff(translation._languages, langs)
-        if !isempty(diff)
-            error("error: languages '$(diff)' are missing")
-        end
+    check_sets(translation._languages, langs, "languages {} are missing", "languages {} show be in 'languages' options")
 
-        diff = setdiff(langs, translation._languages)
-        if !isempty(diff)
-            error("error: languages '$(diff)' should be in 'languages' options")
-        end
+    # Check the parameters
+    ids = map(keys, values(translation._msgs))
+
+    if isempty(ids)
+        error("Error: not messages")
+    end
+
+    ref = Set(keys(translation._msgs[translation._default]))
+
+    for (lang,msgs) in pairs(translation._msgs)
+        ids_lang = keys(msgs)
+
+        check_sets(Set(ids_lang), ref, "ids '{1:s}' not defined in default language '$(translation._default)'",
+                   "ids '{1:s}' not defined in language '$(lang)'")
     end
 end
 
@@ -142,7 +161,7 @@ function read_messages(filename::AbstractString; strict_mode=false)
     conf = SimpleTranslation()
 
     if ! isfile(filename)
-        error("Error, file $(conf.fname) not found")
+        error("Error, file $(filename) not found")
     end
 
     open(filename, "r") do file
