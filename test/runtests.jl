@@ -10,3 +10,9 @@ using Test
     read_messages("test_nostrict1.ini")
     @test_throws ErrorException read_messages("test_nostrict1.ini", strict_mode=true)
 end
+
+@testset "Usage with files" begin
+    fname = joinpath(dirname(pathof(SimpleTranslations)), "..", "test", "test.ini")
+    msgs = read_messages(fname)
+    @test get_msg(msgs, "hi")=="Hi"
+end
