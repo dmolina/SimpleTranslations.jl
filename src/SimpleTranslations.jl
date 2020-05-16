@@ -98,7 +98,7 @@ read the file with the message list.
 - `file::IO`: file to get the messages.
 - `strict_mode::Bool=false`: strict mode (default=false).
 """
-function read_messages(file::IO, strict_mode=false)
+function read_messages(file::IO; strict_mode=false)
     conf = MessagesTranslator()
 
     languages = Set{String}()
@@ -165,7 +165,7 @@ function read_messages(filename::AbstractString; strict_mode=false)
     end
 
     open(filename, "r") do file
-        conf = read_messages(file, strict_mode)
+        conf = read_messages(file, strict_mode=strict_mode)
     end
 
     return conf
