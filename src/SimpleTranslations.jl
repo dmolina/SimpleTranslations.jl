@@ -3,7 +3,7 @@ module SimpleTranslations
 using Parameters
 using Formatting
 
-@with_kw mutable struct SimpleTranslation
+@with_kw mutable struct MessagesTranslator
     _msgs::Dict{String,Dict{String,String}}=Dict()
     _languages::Set{String}=Set()
     _default::String=""
@@ -67,7 +67,7 @@ Check if the translation is perfect, for strict mode.
 
 If any error is detected, an exception is throw
 """
-function check_valid(translation::SimpleTranslation)
+function check_valid(translation::MessagesTranslator)
     langs = Set(keys(translation._msgs))
 
     check_sets(translation._languages, langs, "languages {} are missing", "languages {} show be in 'languages' options")
@@ -99,7 +99,7 @@ read the file with the message list.
 - `strict_mode::Bool=false`: strict mode (default=false).
 """
 function read_messages(file::IO, strict_mode=false)
-    conf = SimpleTranslation()
+    conf = MessagesTranslator()
 
     languages = Set{String}()
     category = "config"
@@ -158,7 +158,7 @@ read the file with the message list.
 - `strict_mode::Bool=false`: strict mode (default=false).
 """
 function read_messages(filename::AbstractString; strict_mode=false)
-    conf = SimpleTranslation()
+    conf = MessagesTranslator()
 
     if ! isfile(filename)
         error("Error, file $(filename) not found")
@@ -172,11 +172,11 @@ function read_messages(filename::AbstractString; strict_mode=false)
 end
 
 """
-set_language!(conf::SimpleTranslation, lang::AbstractString)
+set_language!(conf::MessagesTranslator, lang::AbstractString)
 
 update the current language
 """
-function set_language!(conf::SimpleTranslation, lang::AbstractString)
+function set_language!(conf::MessagesTranslator, lang::AbstractString)
     if !(lang in conf._languages)
         error("Error, language '$lang' unknow in file messages")
     end
@@ -186,11 +186,11 @@ end
 
 
 """
-get_msg(conf::SimpleTranslation, id::AbstractString)
+get_msg(conf::MessagesTranslator, id::AbstractString)
 
 return the id message translate to current language
 """
-function get_msg(conf::SimpleTranslation, id::AbstractString)
+function get_msg(conf::MessagesTranslator, id::AbstractString)
     lang_msgs = conf._msgs[conf._language]
     default_msgs = conf._msgs[conf._default]
 
