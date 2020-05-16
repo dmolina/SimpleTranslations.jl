@@ -43,7 +43,7 @@ parse_option(line)
 Parse the option, separated the values by ","
 """
 function parse_option(line)
-    key, value = parse_msg(line)
+    key, value = strip.(parse_msg(line))
     values = strip.(split(value, ","))
     return key, values
 end
