@@ -16,3 +16,18 @@ end
     msgs = read_messages(fname)
     @test get_msg(msgs, "hi")=="Hi"
 end
+
+@testset "Checking strict" begin
+    test_not_default = """
+default = en
+
+[en]
+person=Person
+
+[eo]
+person=Homo
+"""
+    msgs = read_messages(IOBuffer(test_not_default), strict_mode=true)
+    @test Set(["en", "eo"]) == Set(keys(msgs._msgs))
+    @test Set(["en", "eo"]) == Set(msgs._languages)
+end
