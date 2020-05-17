@@ -149,7 +149,7 @@ function loadmsgs(file::IO; strict_mode=false)
 end
 
 """
-loadmsgs(filename)
+loadmsgs(filename; strict_mode=false)
 
 read the file with the message list.
 
