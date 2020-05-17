@@ -30,7 +30,7 @@ set_language!(messages, "es")
 println(get_msg(messages, "hi")) # Return "Hola a todos"
 ```
 
-Also, when only one file is used, it can be simplify:
+Also, when only one file is used, it can be simpler:
 
 ```
 using SimpleTranslations
