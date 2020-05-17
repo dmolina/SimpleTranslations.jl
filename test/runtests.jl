@@ -31,3 +31,62 @@ person=Homo
     @test Set(["en", "eo"]) == Set(keys(msgs._msgs))
     @test Set(["en", "eo"]) == Set(msgs._languages)
 end
+
+@testset "Checking strict missing language" begin
+    test_not_default = """
+default = en
+language=en,eo,es
+
+[en]
+person=Person
+
+[eo]
+person=Homo
+"""
+    @test_throws FileMessagesException msgs = loadmsgs(IOBuffer(test_not_default), strict_mode=true)
+end
+
+@testset "Checking strict missing language" begin
+    test_not_default = """
+default = en
+language=en,eo,fr
+
+[en]
+person=Person
+people=People
+
+[eo]
+person=Homo
+people=Homoj
+
+[fr]
+person=Personne
+"""
+    @test_throws FileMessagesException msgs = loadmsgs(IOBuffer(test_not_default), strict_mode=true)
+end
+
+@testset "Global State" begin
+    test_not_default = """
+default = en
+languages=en,eo,fr
+
+[en]
+person=Person
+people=People
+
+[eo]
+person=Homo
+people=Homoj
+
+[fr]
+person=Personne
+people=Gens
+"""
+    loadmsgs!(IOBuffer(test_not_default), strict_mode=true)
+    @test get_msg("person") == "Person"
+    set_language!("fr")
+    @test get_msg("person") == "Personne"
+    set_language!("eo")
+    @test get_msg("person") == "Homo"
+    @test msg"person" == "Homo"
+end

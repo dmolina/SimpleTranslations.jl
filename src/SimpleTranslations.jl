@@ -208,10 +208,77 @@ function get_msg(conf::MessagesTranslator, id::AbstractString)
     end
 end
 
+
+const _global_msgs = MessagesTranslator()
+
+"""
+loadmsgs!(file; strict_mode=false)
+
+Load the messages in a global variable.
+
+#  Arguments
+- `file::IO`: file to get the messages.
+- `strict_mode::Bool=false`: strict mode (default=false).
+
+@ref loadmsgs
+
+# Example
+
+@example loadmsgs!("test/test.ini")
+"""
+function loadmsgs!(file; strict_mode=false)
+    global _global_msgs
+    msgs = loadmsgs(file, strict_mode=strict_mode)
+    _global_msgs._msgs = msgs._msgs
+    _global_msgs._language = msgs._language
+    _global_msgs._languages = msgs._languages
+    _global_msgs._default = msgs._default
+    _global_msgs._strict_mode = msgs._strict_mode
+    return nothing
+end
+
+"""
+set_language!(lang)
+
+Set the language to lang in future messages.
+
+# Arguments lang language identification.
+
+# Example
+
+```
+set_language!("es")
+```
+"""
+function set_language!(lang)
+    global _global_msgs
+    set_language!(_global_msgs, lang)
+    return nothing
+end
+
+"""
+Get the translated message in the global Translater
+
+# Arguments
+- id: identificator of the message.
+"""
+function get_msg(id::AbstractString)
+    global _global_msgs
+    return get_msg(_global_msgs, id)
+end
+
+macro msg_str(id)
+    global _global_msgs
+    return get_msg(_global_msgs, id)
+end
+
 export loadmsgs
+export loadmsgs!
 export get_msg
 export set_language!
 
-
+export FileMessagesException
+export MessageMissing
+export @msg_str
 
 end # module
