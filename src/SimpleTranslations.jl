@@ -90,7 +90,7 @@ function check_valid(translation::MessagesTranslator)
 end
 
 """
-read_messages(file, strict_mode)
+loadmsgs(file, strict_mode)
 
 read the file with the message list.
 
@@ -98,7 +98,7 @@ read the file with the message list.
 - `file::IO`: file to get the messages.
 - `strict_mode::Bool=false`: strict mode (default=false).
 """
-function read_messages(file::IO; strict_mode=false)
+function loadmsgs(file::IO; strict_mode=false)
     conf = MessagesTranslator()
 
     languages = Set{String}()
@@ -149,7 +149,7 @@ function read_messages(file::IO; strict_mode=false)
 end
 
 """
-read_messages(filename)
+loadmsgs(filename)
 
 read the file with the message list.
 
@@ -157,7 +157,7 @@ read the file with the message list.
 - `filename::AbstractString`: name of the file to get the messages.
 - `strict_mode::Bool=false`: strict mode (default=false).
 """
-function read_messages(filename::AbstractString; strict_mode=false)
+function loadmsgs(filename::AbstractString; strict_mode=false)
     conf = MessagesTranslator()
 
     if ! isfile(filename)
@@ -165,7 +165,7 @@ function read_messages(filename::AbstractString; strict_mode=false)
     end
 
     open(filename, "r") do file
-        conf = read_messages(file, strict_mode=strict_mode)
+        conf = loadmsgs(file, strict_mode=strict_mode)
     end
 
     return conf
@@ -205,7 +205,7 @@ function get_msg(conf::MessagesTranslator, id::AbstractString)
     end
 end
 
-export read_messages
+export loadmsgs
 export get_msg
 export set_language!
 
