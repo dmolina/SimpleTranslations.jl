@@ -18,7 +18,7 @@ The usage is simple:
 using SimpleTranslations
 
 # Get the messages from a file
-messages = read_messages("messages.ini")
+messages = loadmsgs("messages.ini")
 # Show the message in the default language
 println(get_msg(messages, "hi")) # Return "Hi everybody"
 # Change the language to spanish 
