@@ -4,17 +4,22 @@
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://dmolina.github.io/SimpleTranslations.jl/dev)
 [![Build Status](https://travis-ci.com/dmolina/SimpleTranslations.jl.svg?branch=master)](https://travis-ci.com/dmolina/SimpleTranslations.jl)
 
-## About this package
-
 This package is a simple way to translate the different messages to users
 (including the possible error messages) to different languages.
 
 This package raised as a need utility to translate the error messages to users
 in different languages without including many dependencies.
 
-The term "Simple" means that the package is not oriented to be a complex system,
+The term "Simple** means that the package is not oriented to be a complex system,
 but as a simple and easy to use way to translate messages. For instance, in this 
 packages all the configuration is in a simple file.
+ 
+**Installation:** at the Julia REPL,
+```julia
+using Pkg; Pkg.add("SimpleTranslations")
+```
+
+## Usage
 
 The usage is simple: 
 
