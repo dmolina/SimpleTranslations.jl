@@ -36,6 +36,9 @@ The advantages of using this package is:
 - Add an additional language is very easy, only add content in the file in text
   mode.
   
+- An optional *strict_mode*, in which when the file is loaded, it is checked
+  that all messages are translated to all supported languages.
+  
 ## Relative Packages
 
 In order to show the values of variables in the messages, it is recommended to 
@@ -54,4 +57,4 @@ An more powerful and standard way to translate messages is through
 - In *SimpleTranslations* the input format is simpler.
 
 - *SimpleTranslations*, at difference of *Gettext*, allows a strict mode, in
-  which the is throw an error if a error message is not translate to a language.
+  which the is throw an error if a error message is not translated to a language.
