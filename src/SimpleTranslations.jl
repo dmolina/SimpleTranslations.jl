@@ -191,6 +191,9 @@ get_msg(conf::MessagesTranslator, id::AbstractString)
 return the id message translate to current language
 """
 function get_msg(conf::MessagesTranslator, id::AbstractString)
+    if !haskey(conf._msgs, conf._language)
+        throw(MessageMissing(id, conf._language))
+    end
     lang_msgs = conf._msgs[conf._language]
     default_msgs = conf._msgs[conf._default]
 
