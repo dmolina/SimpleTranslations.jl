@@ -88,5 +88,4 @@ people=Gens
     @test get_msg("person") == "Personne"
     set_language!("eo")
     @test get_msg("person") == "Homo"
-    @test msg"person" == "Homo"
 end
