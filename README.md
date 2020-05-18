@@ -42,10 +42,10 @@ using SimpleTranslations
 # Get the messages from a file
 loadmsgs!("messages.ini")
 # Show the message in the default language
-println(msg"hi") # Return "Hi everybody"
+println(get_msg("hi")) # Return "Hi everybody"
 # Change the language to spanish 
 set_language!("es")
-println(msg"hi") # Return "Hola a todos"
+println(get_msg("hi")) # Return "Hola a todos"
 ```
 
 ## Advantages 
