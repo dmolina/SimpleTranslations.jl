@@ -102,7 +102,7 @@ println(get_msg("hi")) # Hi
 set_language!("es")
 println(get_msg("hi")) # Hola a todos
 set_language!("fr")
-println(get_msg("hi") # Bonjour
+println(get_msg("hi")) # Bonjour
 ```
 ## Strict mode
 

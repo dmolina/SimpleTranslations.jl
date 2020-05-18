@@ -89,3 +89,24 @@ people=Gens
     set_language!("eo")
     @test get_msg("person") == "Homo"
 end
+
+@testset "Setting language" begin
+    set_language!("en")
+    fname = "test_strict.ini"
+    loadmsgs!(fname, strict_mode=true)
+    @test get_msg("hi") == "Hi"
+    set_language!("es")
+    loadmsgs!(fname, strict_mode=true)
+    @test get_msg("hi") == "Hola a todos"
+end
+
+@testset "Setting initial language unknown" begin
+    reset_msgs!()
+    set_language!("eo")
+    fname = "test_strict.ini"
+    loadmsgs!(fname, strict_mode=false)
+    @test get_msg("hi") == "Hi"
+    reset_msgs!()
+    set_language!("eo")
+    @test_throws ErrorException loadmsgs!(fname, strict_mode=true)
+end

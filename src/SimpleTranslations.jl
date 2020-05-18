@@ -177,7 +177,7 @@ set_language!(conf::MessagesTranslator, lang::AbstractString)
 update the current language
 """
 function set_language!(conf::MessagesTranslator, lang::AbstractString)
-    if !(lang in conf._languages)
+    if !isempty(conf._languages) && !(lang in conf._languages)
         error("Error, language '$lang' unknow in file messages")
     end
 
@@ -234,10 +234,12 @@ function loadmsgs!(file; strict_mode=false)
 
     if isempty(_global_msgs._language)
         _global_msgs._language = msgs._language
-    elseif !(_global_msgs._language in msgs._languages) && strict_mode
-        error("previous language '$(_global_msgs.language)' is not supported in new messages file")
-    else
-        _global_msgs._language = msgs._language
+    elseif !(_global_msgs._language in msgs._languages)
+        if strict_mode
+            error("previous language '$(_global_msgs._language)' is not supported in new messages file")
+        else
+            _global_msgs._language = msgs._language
+        end
     end
 
     _global_msgs._default = msgs._default
@@ -275,6 +277,39 @@ function get_msg(id::AbstractString)
     return get_msg(_global_msgs, id)
 end
 
+function reset_msgs!()
+    global _global_msgs
+    _global_msgs._msgs=Dict()
+    _global_msgs._languages = Set()
+    _global_msgs._default = ""
+    _global_msgs._language = ""
+    _global_msgs._strict_mode = false
+    return nothing
+end
+
+"""
+get_language(conf)
+
+Return the current language of the MessagesTranslator
+
+# Arguments
+
+- conf MessagesTranslator
+"""
+function get_language(conf::MessagesTranslator)
+    return conf._language
+end
+
+"""
+get_language()
+
+Return the language of the current global MessagesTranslator
+"""
+function get_language()
+    global _global_msgs
+    return _global_msgs._language
+end
+
 # macro msg_str(id)
 #     global _global_msgs
 #     return get_msg(_global_msgs, id)
@@ -287,6 +322,9 @@ export set_language!
 
 export FileMessagesException
 export MessageMissing
+export reset_msgs!
+export get_language
+
 # export @msg_str
 
 end # module
