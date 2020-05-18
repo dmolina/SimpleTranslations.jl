@@ -93,19 +93,16 @@ To simplify the usage, there is another way to use the function, inspired in the
 function, one with the random generator, and another without the random
 generator (in that case a global variable is automatically used).
 
-This approach also allow us to use the expression msg"*id*" to put to
-current language the message identified by *id*.
-
 ```@example
 using SimpleTranslations
 
 fname = joinpath(dirname(pathof(SimpleTranslations)), "..", "test", "test.ini")
 loadmsgs!(fname)
-println(get_msg("hi")) # Using get_msg
+println(get_msg("hi")) # Hi
 set_language!("es")
-println(msg"hi") # Using the msg" syntax
+println(get_msg("hi")) # Hola a todos
 set_language!("fr")
-println(msg"hi")
+println(get_msg("hi") # Bonjour
 ```
 ## Strict mode
 

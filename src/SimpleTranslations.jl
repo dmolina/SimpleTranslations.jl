@@ -267,10 +267,10 @@ function get_msg(id::AbstractString)
     return get_msg(_global_msgs, id)
 end
 
-macro msg_str(id)
-    global _global_msgs
-    return get_msg(_global_msgs, id)
-end
+# macro msg_str(id)
+#     global _global_msgs
+#     return get_msg(_global_msgs, id)
+# end
 
 export loadmsgs
 export loadmsgs!
@@ -279,6 +279,6 @@ export set_language!
 
 export FileMessagesException
 export MessageMissing
-export @msg_str
+# export @msg_str
 
 end # module
