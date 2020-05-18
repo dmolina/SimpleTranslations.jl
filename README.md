@@ -1,6 +1,6 @@
 # SimpleTranslations
 
-[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://dmolina.github.io/SimpleTranslations.jl/dev)
+[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://dmolina.github.io/SimpleTranslations.jl/dev/)
 [![Build Status](https://travis-ci.com/dmolina/SimpleTranslations.jl.svg?branch=master)](https://travis-ci.com/dmolina/SimpleTranslations.jl)
 
 This package is a simple way to translate the different messages to users
