@@ -230,8 +230,16 @@ function loadmsgs!(file; strict_mode=false)
     global _global_msgs
     msgs = loadmsgs(file, strict_mode=strict_mode)
     _global_msgs._msgs = msgs._msgs
-    _global_msgs._language = msgs._language
     _global_msgs._languages = msgs._languages
+
+    if isempty(_global_msgs._language)
+        _global_msgs._language = msgs._language
+    elseif !(_global_msgs.language in msgs._languages) && strict_mode
+        error("previous language '$(_global_msgs.language)' is not supported in new messages file")
+    else
+        _global_msgs._language = msgs._language
+    end
+
     _global_msgs._default = msgs._default
     _global_msgs._strict_mode = msgs._strict_mode
     return nothing
