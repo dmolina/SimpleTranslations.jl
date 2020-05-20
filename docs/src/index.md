@@ -12,7 +12,25 @@ The term "Simple" means that the package is not oriented to be a complex system,
 but as a simple and easy to use way to translate messages. For instance, in this 
 packages all the configuration is in a simple file.
 
-The usage is simple: 
+The usage is simple. The messages are stored is a file *mesages.ini* as:
+
+```
+[config]
+languages=es,fr,en
+default=en
+
+[en]
+hi=Hi everybody
+
+[es]
+hi=Hola a todos
+
+[fr]
+hi=Bonjour
+```
+
+Then, we can load the messages in the different languages:
+
 
 ```
 using SimpleTranslations

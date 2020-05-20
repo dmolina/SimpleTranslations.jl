@@ -20,7 +20,24 @@ using Pkg; Pkg.add("SimpleTranslations")
 
 ## Usage
 
-The usage is simple: 
+The usage is simple. The messages are stored is a file *mesages.ini* as:
+
+```
+[config]
+languages=es,fr,en
+default=en
+
+[en]
+hi=Hi everybody
+
+[es]
+hi=Hola a todos
+
+[fr]
+hi=Bonjour
+```
+
+Then, we can load the messages in the different languages:
 
 ```
 using SimpleTranslations
