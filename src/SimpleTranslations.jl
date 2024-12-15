@@ -1,7 +1,6 @@
 module SimpleTranslations
-
+using Format
 using Parameters
-using Formatting
 
 @with_kw mutable struct MessagesTranslator
     _msgs::Dict{String,Dict{String,String}}=Dict()
